@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Rewards logic inspired by xERC20 (https://github.com/ZeframLou/playpen/blob/main/src/xERC20.sol)
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.10;
 
 import "solmate/mixins/ERC4626.sol";
 import "solmate/utils/SafeCastLib.sol";
