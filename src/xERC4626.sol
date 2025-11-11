@@ -48,8 +48,9 @@ abstract contract xERC4626 is IxERC4626, ERC4626 {
         uint192 lastRewardAmount_ = lastRewardAmount;
         uint32 rewardsCycleEnd_ = rewardsCycleEnd;
         uint32 lastSync_ = lastSync;
+        uint32 timestamp = uint32(block.timestamp);
 
-        if (block.timestamp >= rewardsCycleEnd_) {
+        if (timestamp >= rewardsCycleEnd_) {
             // no rewards or rewards fully unlocked
             // entire reward amount is available
             return storedTotalAssets_ + lastRewardAmount_;
@@ -57,8 +58,10 @@ abstract contract xERC4626 is IxERC4626, ERC4626 {
 
         // rewards not fully unlocked
         // add unlocked rewards to stored total
-        uint256 unlockedRewards = (lastRewardAmount_ * (block.timestamp - lastSync_)) / (rewardsCycleEnd_ - lastSync_);
-        return storedTotalAssets_ + unlockedRewards;
+        unchecked {
+            uint256 unlockedRewards = (lastRewardAmount_ * (timestamp - lastSync_)) / (rewardsCycleEnd_ - lastSync_);
+            return storedTotalAssets_ + unlockedRewards;
+        }
     }
 
     // Update storedTotalAssets on withdraw/redeem

@@ -27,7 +27,7 @@ abstract contract PeripheryPayments {
 
     receive() external payable {}
 
-    function approve(ERC20 token, address to, uint256 amount) public payable {
+    function approve(ERC20 token, address to, uint256 amount) public {
         token.safeApprove(to, amount);
     }
 
@@ -35,14 +35,12 @@ abstract contract PeripheryPayments {
         uint256 balanceWETH9 = WETH9.balanceOf(address(this));
         require(balanceWETH9 >= amountMinimum, 'Insufficient WETH9');
 
-        if (balanceWETH9 > 0) {
-            WETH9.withdraw(balanceWETH9);
-            recipient.safeTransferETH(balanceWETH9);
-        }
+        WETH9.withdraw(balanceWETH9);
+        recipient.safeTransferETH(balanceWETH9);
     }
 
     function wrapWETH9() public payable {
-        if (address(this).balance > 0) WETH9.deposit{value: address(this).balance}(); // wrap everything
+        if (msg.value > 0) WETH9.deposit{value: msg.value}(); // wrap everything
     }
 
     function pullToken(ERC20 token, uint256 amount, address recipient) public payable {
@@ -57,9 +55,7 @@ abstract contract PeripheryPayments {
         uint256 balanceToken = token.balanceOf(address(this));
         require(balanceToken >= amountMinimum, 'Insufficient token');
 
-        if (balanceToken > 0) {
-            token.safeTransfer(recipient, balanceToken);
-        }
+        token.safeTransfer(recipient, balanceToken);
     }
 
     function refundETH() external payable {

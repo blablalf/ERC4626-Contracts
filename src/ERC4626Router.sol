@@ -60,7 +60,7 @@ contract ERC4626Router is IERC4626Router, ERC4626RouterBase, ENSReverseRecord {
         ERC20 asset = ERC20(vault.asset());
         uint256 assetBalance = asset.balanceOf(msg.sender);
         uint256 maxDeposit = vault.maxDeposit(to);
-        uint256 amount = maxDeposit < assetBalance ? maxDeposit : assetBalance;
+        uint256 amount = assetBalance < maxDeposit ? assetBalance : maxDeposit;
         pullToken(asset, amount, address(this));
         return deposit(vault, to, amount, minSharesOut);
     }
@@ -73,7 +73,7 @@ contract ERC4626Router is IERC4626Router, ERC4626RouterBase, ENSReverseRecord {
     ) public payable override returns (uint256 amountOut) {
         uint256 shareBalance = vault.balanceOf(msg.sender);
         uint256 maxRedeem = vault.maxRedeem(msg.sender);
-        uint256 amountShares = maxRedeem < shareBalance ? maxRedeem : shareBalance;
+        uint256 amountShares = shareBalance < maxRedeem ? shareBalance : maxRedeem;
         return redeem(vault, to, amountShares, minAmountOut);
     }
 }
