@@ -6,7 +6,7 @@ import {SafeTransferLib} from "solmate/utils/SafeTransferLib.sol";
 
 import {SelfPermit} from "./external/SelfPermit.sol";
 import {Multicall} from "./external/Multicall.sol";
-import {PeripheryPayments, IWETH9} from "./external/PeripheryPayments.sol";
+import {PeripheryPayments} from "./external/PeripheryPayments.sol";
 
 /// @title ERC4626 Router Base Contract
 abstract contract ERC4626RouterBase is IERC4626RouterBase, SelfPermit, Multicall, PeripheryPayments {

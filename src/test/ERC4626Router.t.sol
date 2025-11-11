@@ -5,7 +5,8 @@ import {MockERC4626} from "solmate/test/utils/mocks/MockERC4626.sol";
 import {WETH} from "solmate/tokens/WETH.sol";
 
 import {IERC4626Router, ERC4626Router} from "../ERC4626Router.sol";
-import {IERC4626RouterBase, ERC4626RouterBase, IWETH9, IERC4626, SelfPermit, PeripheryPayments} from "../ERC4626RouterBase.sol";
+import {IERC4626RouterBase, ERC4626RouterBase, IERC4626, SelfPermit, PeripheryPayments} from "../ERC4626RouterBase.sol";
+import {IWETH9} from "../external/PeripheryPayments.sol";
 
 import {DSTestPlus} from "solmate/test/utils/DSTestPlus.sol";
 
